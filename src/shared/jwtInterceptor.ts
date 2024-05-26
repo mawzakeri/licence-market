@@ -1,5 +1,5 @@
 import axios from "axios";
-import {getToken} from "@/shared/helper";
+import {getToken, logoutUserHandler} from "@/shared/helper";
 /*import store from '../store/index';*/
 
 const jwtInterceptor = axios.create({});
@@ -19,7 +19,11 @@ jwtInterceptor.interceptors.response.use(
   },
   async (error) =>
   {
-    console.log(error)
+    if (error.response && error.response.status === 401)
+    {
+      logoutUserHandler();
+    }
+    return error;
   }
 );
 

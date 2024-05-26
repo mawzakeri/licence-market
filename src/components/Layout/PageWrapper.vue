@@ -3,26 +3,33 @@
   <div v-if="userStore.loginStatus" class="page-wrapper">
 
     <div :class="`side-menu-wrapper ${sideMenuStatus && 'active'}`">
+      <div class="p-4">
+        <span class="cursor-pointer" @click="() => sideMenuStatus = false">
+          بستن
+        </span>
+      </div>
       <div class="side-menu-logo-wrapper">
         <img src="@/assets/images/logo.webp" alt="">
       </div>
       <MenuItems />
     </div>
     <div class="content-wrapper">
-      <header class="d-flex justify-content-between">
+      <header class="d-flex flex-wrap justify-content-between">
 
-        <div class="d-flex align-items-center">
+        <div class="d-flex flex-column col-12 col-lg-6">
           <div class="d-flex align-items-center pb-4">
             <div class="side-menu-icon">
               <SvgIcon @click="sideMenuHandler" name="bars" />
             </div>
             <Breadcrumb class="mx-4" />
           </div>
-          <div>
-            <SearchBox :userSearchHandler="userSearchHandler" />
-          </div>
-          <div>
-            <FilterBox :userFilterHandler="userFilterHandler" />
+          <div class="d-flex flex-column flex-lg-row align-items-lg-center">
+            <div class="col-12 my-3 my-lg-0">
+              <SearchBox :userSearchHandler="userSearchHandler" />
+            </div>
+            <div>
+              <FilterBox :userFilterHandler="userFilterHandler" />
+            </div>
           </div>
         </div>
 
@@ -146,9 +153,9 @@ export default {
         //فرستادن پارامتر هایی که کاربر میخواسته سرچ کنه به سمت صفحه اصلی که دیتا گرفته میشه
       }
     },
-    userFilterHandler(filter){
+    userFilterHandler(filter: any , type){
       if(this.getFilterItems){
-        this.getFilterItems(filter);
+        this.getFilterItems(filter , type);
       }
     }
   },
@@ -228,6 +235,18 @@ header{
   background: var(--smoke-background);
   transition: .2s;
   height: 100dvh;
+}
+
+@media (max-width: 992px) {
+  .side-menu-wrapper.active {
+    width: 250px;
+    position: fixed;
+    z-index: 1001;
+  }
+
+  .side-menu-wrapper.active ~ .content-wrapper {
+    width: 100%;
+  }
 }
 
 </style>

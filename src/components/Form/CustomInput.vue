@@ -30,7 +30,6 @@ export default {
   },
   watch: {
     value(){
-      console.log(this.$refs.inputElem)
       if(this.validation == "email" && this.$refs.inputElem){
         if(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(this.value)){
           this.$refs.inputElem.classList.remove('danger-border');

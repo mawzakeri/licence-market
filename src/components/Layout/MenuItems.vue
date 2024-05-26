@@ -44,6 +44,10 @@ export default {
       background: var(--main-org-color);
     }
 
+    span {
+      color: var(--main-org-color);
+    }
+
   }
 }
 

@@ -16,7 +16,6 @@
     --black: #232323
 }
 
-
 .success-border {
     border: 1px solid var(--success-color) !important;
     box-shadow: 0 0 15px var(--light-shadow-success-color) !important;

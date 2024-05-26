@@ -32,25 +32,21 @@ function queryArrayHandler(items , name){
     if(items && name){
         items?.forEach((item: {key: string} , i) => {
             const KEY = Object.keys(item);
-            console.log(KEY , 'iet' , item[KEY])
             if(KEY && item[KEY])
-                PARAMS += `${i === 0 ? '&' : ''}${name}=${stringFromObj({[KEY]: 'asc'})}${i !== (items.length - 1) ? '&' : ''}`
+                PARAMS += `${i === 0 ? '&' : ''}${name}=${stringFromObj({[KEY]: name === 'filter' ? item[KEY] : 'asc'})}${i !== (items.length - 1) ? '&' : ''}`
                 // its generate => variable = `{x: 'y'}&{z: 'd'}`
         })
         return PARAMS
     }
     else
         return ''
-
-    console.log(PARAMS)
 }
 
 export async function getOrders(arg: getOrdersInterface) {
 
-    const PAGE = arg.page ? `?page=${arg.page}&` : '';
+    const PAGE = arg.page ? `?page=${arg.page}&` : ''
     const LIMIT = arg.limit ? `limit=${arg.limit}` : '';
     const ORDER_BY = queryArrayHandler(arg.orderBy , 'orderBy');
-    console.log(ORDER_BY , 'ORDER_BY')
     const FILTER = queryArrayHandler(arg.filter , 'filter');
     const SEARCH = arg.search ? `&search=${stringFromObj([arg.search])}` : '';
 

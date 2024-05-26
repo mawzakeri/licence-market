@@ -41,6 +41,10 @@ export const e2p = (s: string) => {
     }
 }
 
+export function stringFromObj(obj){
+    return JSON.stringify(obj);
+}
+
 export function convertDate(date: string)
 {
     if(date){

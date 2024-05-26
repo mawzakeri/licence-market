@@ -28,16 +28,17 @@ export default defineComponent({
 
       const result = await AppApi[this.api.route](arg);
 
-/*      if(result === undefined){
-        logoutUserHandler();
-      }*/
-
       this.reciveData(result)
       if(result && result.data){
         if(!this.noPage && result.data.meta)
           this.totalPages = result.data.meta.totalPage
         else
           this.totalPages = 0
+      }
+
+      if(this.currentPage === 1){
+        if(!this.$route?.query?.page)
+          this.$router?.push(`${this.$route?.fullPath}?page=${1}`)
       }
     },
     gotoPage(page){
@@ -113,9 +114,12 @@ export default defineComponent({
       border-radius: 3px;
       color: #000;
       transition: 0.2s;
+      outline: none;
+      border: none;
+      font-size: 22px;
     }
     button.active{
-      background: #6F0BA2FF;
+      background: var(--main-org-color);
       color: #fff;
     }
   }

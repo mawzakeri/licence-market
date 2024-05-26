@@ -99,7 +99,6 @@ export default {
           setTimeout(() => {
             this.showSearchContent = false;
           } , 50)
-          console.log(this.showSearchContent , 'show content')
           //باکس سرچ رو می بنده بعدش
         }
       }
@@ -153,6 +152,7 @@ export default {
   box-shadow: 0 0 15px var(--light-shadow);
   display: flex;
   width: 500px;
+  max-width: 100%;
   padding: 8px;
   border-radius: 10px;
 
@@ -178,7 +178,7 @@ export default {
   min-height: 0px;
   transition: 0s height , .5s min-height;
   background: var(--main-background);
-  border: 1px solid var(--light-smoke);
+  border: 1px solid transparent;
   border-radius: 8px;
   overflow: hidden;
 
@@ -200,6 +200,7 @@ export default {
   height: 100%;
   min-height: 350px;
   top: 61px;
+  border: 1px solid var(--light-smoke);
 }
 
 

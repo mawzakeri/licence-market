@@ -28,8 +28,8 @@ export default defineComponent({
       isActive: false,
       openFilterModal: false,
       modalContent: '',
-      operators: [],
-      labels: [],
+      operators: [] as any,
+      labels: [] as any,
       modalLoaded: false
     }
   },
@@ -39,19 +39,16 @@ export default defineComponent({
     },
     selectItemHandler(value){
       if(value === 'label'){
-        console.log('salam')
         this.getLabels();
         this.openFilterModal = true;
         this.modalContent = 'label';
       }
       else if (value === 'operators'){
-        console.log('salam')
         this.openFilterModal = true;
         this.modalContent = 'operators';
         this.getOperators();
       }
       else if (value === 'order-date'){
-        console.log('salam')
         this.openFilterModal = true;
         this.modalContent = 'order-date';
       }
@@ -73,9 +70,23 @@ export default defineComponent({
       }
       this.modalLoaded = true;
     },
-    selectLabels(label:number){
-      this.userFilterHandler(label);
+    selectLabels(label_id:number){
+      this.labels.forEach(label => {
+        if(label.id === label_id){
+          label.selected = !label.selected
+        }
+      })
     },
+    submitFilterLabel(){
+      let labels = []
+      this.labels.forEach(label => {
+        if(label.selected){
+          labels.push(label.id)
+        }
+      });
+      this.userFilterHandler(labels , 'label');
+      this.openFilterModal = false;
+    }
   }
 })
 </script>
@@ -83,7 +94,7 @@ export default defineComponent({
 <template>
 
   <div class="position-relative wrapper-filter-box">
-    <div @click="showFilterContent" class="filter-box mx-3">
+    <div @click="showFilterContent" class="filter-box mx-lg-3">
       <SvgIcon name="plus" size="22" />
       <span class="mx-3">
         فیلتر جدید
@@ -104,7 +115,7 @@ export default defineComponent({
           بر اساس لیبل
         </p>
         <div v-if="modalLoaded">
-          <div @click="() => selectLabels(item.id)" class="operator-box" v-for="(item , i) in labels" :key="`${i}-item-operator`">
+          <div @click="() => selectLabels(item.id)" :class="`simple-box ${item.selected && 'active'}`" v-for="(item , i) in labels" :key="`${i}-item-operator`">
             <span>
               {{ item?.name }}
             </span>
@@ -113,6 +124,11 @@ export default defineComponent({
         <div v-else>
           <Loading />
         </div>
+
+        <button @click="submitFilterLabel" style="margin: 0 auto" class="main-btn">
+          ثبت فیلتر
+        </button>
+
       </div>
       <div v-if="modalContent === 'operators'">
         <p>
@@ -122,7 +138,7 @@ export default defineComponent({
           اپراتور مورد نظر خود را انتخاب کنید
         </span>
         <div v-if="modalLoaded">
-          <div @click="() => selectOperator(item.username)" class="operator-box" v-for="(item , i) in operators" :key="`${i}-item-operator`">
+          <div @click="() => selectOperator(item.username)" class="simple-box" v-for="(item , i) in operators" :key="`${i}-item-operator`">
             <span>
               {{ item?.username }}
             </span>
@@ -144,7 +160,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 
-.operator-box {
+.simple-box {
   box-shadow: 0 0 15px var(--light-shadow);
   border-radius: 8px;
   padding: 8px 15px;
@@ -157,6 +173,10 @@ export default defineComponent({
     color: var(--main-org-color);
   }
 
+}
+
+.simple-box.active {
+  color: var(--success-color);
 }
 
 .custom-modal {
@@ -194,6 +214,7 @@ export default defineComponent({
   position: absolute;
   top: 0;
   width: 100%;
+  max-width: 300px;
   height: 0;
   min-height: 0;
   right: 15px;

@@ -10,9 +10,6 @@ export const userAuth = defineStore( 'user' , {
     actions: {
         async loginUser(response:any)
         {
-
-            console.log(this , response , 'res')
-
             await storageHandler("token" , response.access_token);
             //ذخیره کردن توکن توی localstorage
 
