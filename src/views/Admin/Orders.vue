@@ -37,7 +37,7 @@ export default {
       ordersArg: {
         orderBy: [],
         filter: [],
-        search: ''
+        search: '',
       },
       forceRefreshNumber: 0
     }
@@ -64,6 +64,9 @@ export default {
 
       console.log(this.ordersArg.orderBy ,'order')
       this.forceRefreshNumber++;
+    },
+    getFilterItems(filter){
+      this.filter = filter
     }
   }
 }

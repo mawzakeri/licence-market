@@ -7,6 +7,7 @@ import Loading from "@/components/Public/Loading.vue";
 export default defineComponent({
   name: "FilterBox",
   components: {Loading, SvgIcon},
+  props: ['userFilterHandler'],
   data(){
     return {
       filterContent: false,
@@ -72,8 +73,8 @@ export default defineComponent({
       }
       this.modalLoaded = true;
     },
-    selectLabels(label){
-      console.log(label)
+    selectLabels(label:number){
+      this.userFilterHandler(label);
     },
   }
 })

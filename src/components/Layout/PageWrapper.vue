@@ -22,7 +22,7 @@
             <SearchBox :userSearchHandler="userSearchHandler" />
           </div>
           <div>
-            <FilterBox :userSearchHandler="userSearchHandler" />
+            <FilterBox :userFilterHandler="userFilterHandler" />
           </div>
         </div>
 
@@ -145,9 +145,14 @@ export default {
         this.getSearchItems(value);
         //فرستادن پارامتر هایی که کاربر میخواسته سرچ کنه به سمت صفحه اصلی که دیتا گرفته میشه
       }
+    },
+    userFilterHandler(filter){
+      if(this.getFilterItems){
+        this.getFilterItems(filter);
+      }
     }
   },
-  props:['getSearchItems']
+  props:['getSearchItems' , 'getFilterItems']
 }
 
 </script>
