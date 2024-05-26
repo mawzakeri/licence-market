@@ -174,7 +174,7 @@ export default {
   width: 100%;
   height: 0%;
   position: absolute;
-  top: 61px;
+  top: 57px;
   min-height: 0px;
   transition: 0s height , .5s min-height;
   background: var(--main-background);
@@ -199,6 +199,7 @@ export default {
 .search-content.active {
   height: 100%;
   min-height: 350px;
+  top: 61px;
 }
 
 

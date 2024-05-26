@@ -11,15 +11,18 @@
     <div class="content-wrapper">
       <header class="d-flex justify-content-between">
 
-        <div>
-          <div>
+        <div class="d-flex align-items-center">
+          <div class="d-flex align-items-center pb-4">
             <div class="side-menu-icon">
               <SvgIcon @click="sideMenuHandler" name="bars" />
             </div>
-            <Breadcrumb />
+            <Breadcrumb class="mx-4" />
           </div>
           <div>
             <SearchBox :userSearchHandler="userSearchHandler" />
+          </div>
+          <div>
+            <FilterBox :userSearchHandler="userSearchHandler" />
           </div>
         </div>
 
@@ -89,10 +92,11 @@ import {runToast} from "@/shared/helper";
 import { userAuth } from "../../store"
 import {mapActions} from "pinia";
 import MenuItems from "@/components/Layout/MenuItems.vue";
+import FilterBox from "@/components/FilterBox.vue";
 
 export default {
   name: "PageWrapper",
-  components: {MenuItems, CustomInput, SearchBox, IconBox, Breadcrumb, SvgIcon},
+  components: {FilterBox, MenuItems, CustomInput, SearchBox, IconBox, Breadcrumb, SvgIcon},
   data(){
     return {
       sideMenuStatus: false,

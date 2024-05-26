@@ -1,6 +1,6 @@
 <template>
 
-  <div class="order-box flex-wrap my-3">
+  <div class="order-box flex-wrap align-items-center my-3">
 
     <!--
       شماره سفارش
@@ -61,7 +61,7 @@
         {{ convertDate(data.orderTime) }}
       </div>
       <div class="px-2 d-flex item-wrapper justify-content-end" v-if="data?.assignedTo && data.assignedTo?.username">
-        <span class="m-2">
+        <span class="mx-2">
           {{ data.assignedTo.username }}
         </span>
         <SvgIcon class="d-inline-block" name="admin" />
@@ -122,12 +122,14 @@ export default {
 
 .item-wrapper {
   width: 150px;
+  display: flex;
+  align-items: center;
 }
 
 .label {
   color: #fff;
   border-radius: 8px;
-  padding: 2px 15px;
+  padding: 10px 15px;
   font-size: var(--smallest-text);
   width: 100px;
   display: flex;
