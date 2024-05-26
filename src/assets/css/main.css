@@ -1,0 +1,59 @@
+@import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "@/assets/css/fonts.css";
+@import "@/assets/css/colors.css";
+
+html {
+    direction: rtl;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.no-border-input {
+    border: none !important;
+    outline: none !important;
+    padding: 8px;
+    color: var(--muted-color);
+    font-size: var(--small-text);
+}
+
+.no-border-input::placeholder {
+    color: var(--muted-color);
+    font-size: var(--small-text);
+}
+
+.border-left {
+    border-left: 1px solid var(--light-smoke);
+}
+
+.main-btn {
+    background: var(--main-org-color);
+    border: none !important;
+    outline: none !important;
+    border-radius: 8px;
+    color: var(--main-background);
+    cursor: pointer;
+    transition: .2s;
+    display: flex;
+    width: max-content;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 30px;
+}
+
+.ml-3 {
+    margin-left: 10px;
+}
+
+.main-btn:hover {
+    opacity: 0.95;
+}
+
+a {
+    text-decoration: none;
+}

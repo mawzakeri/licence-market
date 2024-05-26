@@ -1,0 +1,19 @@
+@font-face {
+    font-family: 'iransans';
+    src:
+            url('/public/fonts/iransans.eot') format('eot'),
+                /* IE6–8 */
+            url('/public/fonts/iransans.woff') format('woff'),
+                /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+            url('/public/fonts/iransans.ttf') format('truetype');
+            /* Saf3—5, Chrome4+, FF3.5, Opera 10+ */
+}
+
+* {
+    font-family: "iransans" , arial;
+}
+
+:root {
+    --small-text: 15px;
+    --smallest-text: 12px
+}
