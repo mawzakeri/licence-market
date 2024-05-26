@@ -1,10 +1,12 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
 import SvgIcon from "@/components/Icons/SvgIcon.vue";
+import { getOperators , getLabels } from '@/API';
+import Loading from "@/components/Public/Loading.vue";
 
 export default defineComponent({
   name: "FilterBox",
-  components: {SvgIcon},
+  components: {Loading, SvgIcon},
   data(){
     return {
       filterContent: false,
@@ -23,7 +25,11 @@ export default defineComponent({
         }
       ],
       isActive: false,
-      open: true
+      openFilterModal: false,
+      modalContent: '',
+      operators: [],
+      labels: [],
+      modalLoaded: false
     }
   },
   methods: {
@@ -33,13 +39,41 @@ export default defineComponent({
     selectItemHandler(value){
       if(value === 'label'){
         console.log('salam')
+        this.getLabels();
+        this.openFilterModal = true;
+        this.modalContent = 'label';
       }
       else if (value === 'operators'){
         console.log('salam')
+        this.openFilterModal = true;
+        this.modalContent = 'operators';
+        this.getOperators();
       }
       else if (value === 'order-date'){
         console.log('salam')
+        this.openFilterModal = true;
+        this.modalContent = 'order-date';
       }
+    },
+    async getOperators(){
+      const res = await getOperators();
+      if(res){
+        this.operators = res.data;
+      }
+      this.modalLoaded = true;
+    },
+    selectOperator(operator){
+      console.log(operator)
+    },
+    async getLabels(){
+      const res = await getLabels();
+      if(res){
+        this.labels = res.data;
+      }
+      this.modalLoaded = true;
+    },
+    selectLabels(label){
+      console.log(label)
     },
   }
 })
@@ -47,14 +81,14 @@ export default defineComponent({
 
 <template>
 
-  <div class="position-relative">
+  <div class="position-relative wrapper-filter-box">
     <div @click="showFilterContent" class="filter-box mx-3">
       <SvgIcon name="plus" size="22" />
       <span class="mx-3">
         فیلتر جدید
       </span>
     </div>
-    <div :class="`filter-content ${filterContent && 'active'}`">
+    <div :class="`filter-content`">
       <div @click="() => selectItemHandler(item.value)" v-for="(item , i) in filterItems" :key="`${i}-filter-item`" class="filter-item">
         {{ item.title }}
       </div>
@@ -62,15 +96,67 @@ export default defineComponent({
   </div>
 
   <Teleport to="body">
-    <div v-if="open" class="custom-modal">
-      <p>Hello from the modal!</p>
-      <button @click="open = false">Close</button>
+    <div @click="() => openFilterModal = false" :class="`backdrop ${openFilterModal && 'active'}`"></div>
+    <div v-if="openFilterModal" class="custom-modal">
+      <div v-if="modalContent === 'label'">
+        <p>
+          بر اساس لیبل
+        </p>
+        <div v-if="modalLoaded">
+          <div @click="() => selectLabels(item.id)" class="operator-box" v-for="(item , i) in labels" :key="`${i}-item-operator`">
+            <span>
+              {{ item?.name }}
+            </span>
+          </div>
+        </div>
+        <div v-else>
+          <Loading />
+        </div>
+      </div>
+      <div v-if="modalContent === 'operators'">
+        <p>
+          بر اساس اپراتور ها
+        </p>
+        <span>
+          اپراتور مورد نظر خود را انتخاب کنید
+        </span>
+        <div v-if="modalLoaded">
+          <div @click="() => selectOperator(item.username)" class="operator-box" v-for="(item , i) in operators" :key="`${i}-item-operator`">
+            <span>
+              {{ item?.username }}
+            </span>
+          </div>
+        </div>
+        <div v-else>
+          <Loading />
+        </div>
+      </div>
+      <div v-if="modalContent === 'order-date'">
+        <p>
+          بر اساس زمان ثبت سفارش
+        </p>
+      </div>
     </div>
   </Teleport>
 
 </template>
 
 <style lang="scss" scoped>
+
+.operator-box {
+  box-shadow: 0 0 15px var(--light-shadow);
+  border-radius: 8px;
+  padding: 8px 15px;
+  margin: 15px 0;
+  border-right: 5px solid var(--main-org-color);
+  cursor: pointer;
+  transition: .2s;
+
+  &:hover {
+    color: var(--main-org-color);
+  }
+
+}
 
 .custom-modal {
   position: fixed;
@@ -115,12 +201,14 @@ export default defineComponent({
   padding: 0;
   transition: .2s;
   border-radius: 10px;
-  overflow: hidden;
+  overflow: auto;
+  max-height: 60vh;
 
   .filter-item {
     padding: 8px;
     transition: .2s;
     cursor: pointer;
+    white-space: nowrap;
 
     &:hover {
       color: var(--main-org-color);
@@ -129,11 +217,31 @@ export default defineComponent({
   }
 }
 
-.filter-content.active {
+.wrapper-filter-box:hover .filter-content {
   min-height: 150px;
   padding: 10px;
   top: 42px;
   min-width: 240px;
+}
+
+.backdrop {
+  width: 0;
+  height: 0;
+  background: var(--backdrop);
+  opacity: 0;
+  top: 0;
+  right: 0;
+  position: fixed;
+  transition: .5s;
+  border-radius: 150px 0 0 150px;
+  cursor: pointer;
+}
+
+.backdrop.active {
+  width: 100vw;
+  height: 100vh;
+  opacity: 1;
+  border-radius: 0;
 }
 
 </style>

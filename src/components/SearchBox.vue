@@ -136,7 +136,7 @@ export default {
   right: 0;
   position: fixed;
   transition: .5s;
-  border-radius: 50% 0 0 50%;
+  border-radius: 150px 0 0 150px;
   cursor: pointer;
 }
 

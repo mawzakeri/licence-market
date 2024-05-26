@@ -59,6 +59,17 @@ export async function getOrders(arg: getOrdersInterface) {
     return sendResponse(response)
 }
 
+export async function getOperators() {
+    const url = apiUrl + `/operator`;
+    const response = await jwtInterceptor.get(url);
+    return sendResponse(response)
+}
+
+export async function getLabels() {
+    const url = apiUrl + `/label`;
+    const response = await jwtInterceptor.get(url);
+    return sendResponse(response)
+}
 
 export default {
     getOrders
